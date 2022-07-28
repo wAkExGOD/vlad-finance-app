@@ -1,0 +1,78 @@
+$categories-width: 40%;
+
+.app-section#categories {
+  display: grid;
+  height: 100%;
+  grid-template-areas:
+    'date date'
+    'categories statistic';
+  grid-template-columns: minmax(25rem, 0.75fr) 1fr;
+  grid-template-rows: 5rem  auto;
+
+  .date {
+    grid-area: date;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border-bottom: 1px solid #e1e1e1;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .categories {
+    grid-area: categories;
+    ul {
+      color: white;
+      display: flex;
+      flex-direction: column;
+      max-height: 42rem;
+      overflow-y: auto;
+      padding-right: 1rem;
+      .category {
+        border-radius: 0.5rem;
+        padding: 1rem;
+        background: lightblue;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.2rem;
+        &:not(:last-child) {
+          margin-bottom: 1rem;
+        }
+        .category-name {
+          // text-transform: uppercase;
+          margin-right: 1rem;
+        }
+        .category-expenses {
+          padding: 0.25rem 0.5rem;
+          background: $white;
+          color: black;
+          border-radius: 0.5rem;
+        }
+      }
+    }
+  }
+
+  .circle-statistic {
+    grid-area: statistic;
+    display: flex;
+    flex-direction: column;
+    .circle-container {
+      padding: 1rem;
+      height: 80%;
+    }
+    .info {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    canvas {
+      max-width: 100%;
+    }
+  }
+
+  h2 {
+    line-height: 2;
+    text-align: center;
+  }
+}

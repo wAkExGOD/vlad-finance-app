@@ -1,0 +1,18 @@
+.app-section#overview {
+  .statistic-block {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: $light-purple;
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+    h1 {
+      text-align: center;
+    }
+    .chart {
+      width: calc(100% - 4px);
+      max-width: 60vw;
+      margin: 0 auto;
+    }
+  }
+}

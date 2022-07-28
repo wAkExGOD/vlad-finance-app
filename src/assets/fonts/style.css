@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'Avenir Next Rounded Std';
+  /* src: url('AvenirNextRoundedStd-Reg.eot'); */
+  src: local('Avenir Next Rounded Std Regular'),
+    local('AvenirNextRoundedStd-Reg'),
+    /* url('AvenirNextRoundedStd-Reg.eot?#iefix') format('embedded-opentype'), */
+    url('AvenirNextRoundedStd-Reg.woff2') format('woff2');
+    /* url('AvenirNextRoundedStd-Reg.woff') format('woff'), */
+    /* url('AvenirNextRoundedStd-Reg.ttf') format('truetype'); */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Avenir Next Rounded Std';
+  /* src: url('AvenirNextRoundedStd-Bold.eot'); */
+  src: local('Avenir Next Rounded Std Bold'), local('AvenirNextRoundedStd-Bold'),
+    /* url('AvenirNextRoundedStd-Bold.eot?#iefix') format('embedded-opentype'), */
+    url('AvenirNextRoundedStd-Bold.woff2') format('woff2');
+    /* url('AvenirNextRoundedStd-Bold.woff') format('woff'), */
+    /* url('AvenirNextRoundedStd-Bold.ttf') format('truetype'); */
+  font-weight: bold;
+  font-style: normal;
+}
