@@ -1,4 +1,7 @@
-nav#nav {
+@import '../../styles/variables';
+
+.nav {
+  grid-area: nav;
   background: $black;
 
   width: 100%;
@@ -23,7 +26,7 @@ nav#nav {
     &:not(:last-child) {
       margin-bottom: 1rem;
     }
-    &.active {
+    &[class="active"] {
       background: $blue;
     }
     img {

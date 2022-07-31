@@ -1,4 +1,7 @@
-header#header {
+@import '../../styles/variables';
+
+.header {
+  grid-area: header;
   background: $blue;
   display: flex;
   align-items: center;

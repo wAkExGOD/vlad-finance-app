@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+import styles from './Notification.module.scss';
+
 export function Notification(props) {
   // status: 'success'|'error'|'warning'|'info';
   const [isShown, setIsShown] = useState(true);
@@ -11,7 +13,7 @@ export function Notification(props) {
 
   return isShown &&
     <div
-      className={['notify', status].join(' ')}
+      className={[styles.notify, styles[status]].join(' ')}
       onClick={() => setIsShown(false)}>
       {text}
     </div>;

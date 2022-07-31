@@ -75,7 +75,16 @@ export function Purchases() {
             <PurchaseCard key={data.id} data={data} />
           ))}
         </div>
-        <Button>Load more purchases...</Button>
+        <div className="pagination">
+          <span className="prev">←</span>
+          <div className="pages">
+            <span className="active">1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+          </div>
+          <span className="next">→</span>
+        </div>
       </div>
       <Modal active={modalActive} setActive={setModalActive}>
         <AddPurchaseForm handleSubmit={addNewPurchase} />

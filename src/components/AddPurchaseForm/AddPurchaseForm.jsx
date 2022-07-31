@@ -1,12 +1,12 @@
 import { useForm } from 'react-hook-form';
-import { categories } from '../constants';
+import { categories } from '../../constants';
 
 export function AddPurchaseForm(props) {
   const { register, formState: { errors, isValid }, handleSubmit, reset } = useForm({ mode: "onChange" });
 
   return (
     <form
-      id="add-purchase"
+      id="add_purchase"
       onSubmit={handleSubmit((data) => {
         props.handleSubmit(data); reset();
       })}>
@@ -38,14 +38,14 @@ export function AddPurchaseForm(props) {
           className="label-input"
           {...register('category', { required: 'Select the product category' })}>
           <option value="">Select category...</option>
-          {categories.map(name => (
-            <option value={name}>{name}</option>
+          {categories.map((name, index) => (
+            <option value={name} id={index}>{name}</option>
           ))}
         </select>
         {errors?.category && <p className="error-text">{errors?.category?.message || 'Error!'}</p>}
       </label>
       <label htmlFor="purchase-price">
-        <span className="label-name">Product price</span>
+        <span className="label-name">Product price (in BYN)</span>
         <input
           id="purchase-price"
           className="label-input"

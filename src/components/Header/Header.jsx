@@ -1,12 +1,13 @@
 import { NavLink } from 'react-router-dom';
 
-import settingsIcon from '../assets/icons/settings.svg';
+import settingsIcon from '../../assets/icons/settings.svg';
+import styles from './Header.module.scss';
 
 export function Header() {
   return (
-    <header id="header">
+    <header className={styles.header}>
       <NavLink to="/" className="logo">
-        <h1>Finances App</h1>
+        <h1>Finance App</h1>
       </NavLink>
       <div className="settings">
         <NavLink to="/settings" className="settings">

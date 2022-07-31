@@ -44,43 +44,22 @@ img {
   grid-template-columns: $nav-width auto;
   grid-template-rows: $header-height auto;
 }
-header#header {
-  grid-area: header;
-}
-nav#nav {
-  grid-area: nav;
-}
-main#main {
+// .header {
+//   grid-area: header;
+// }
+// .nav {
+//   grid-area: nav;
+// }
+.main {
   grid-area: main;
 }
-// footer { grid-area: footer; }
+// footer {
+//   grid-area: footer;
+// }
 
 .app-section {
   height: 100%;
   padding: 2rem;
-}
-
-.btn {
-  outline: none;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  padding: 1rem 2rem;
-  transition: $transition;
-  border: 1px solid transparent;
-  &.contained {
-    background: $blue;
-    color: white;
-    &:hover {
-      background: $light-blue;
-    }
-  }
-  &.outlined {
-    &:hover {
-      background-color: rgba(25, 118, 210, 0.04);
-      border: 1px solid #1976d2;
-    }
-  }
 }
 
 input:focus,
@@ -95,4 +74,15 @@ select {
   border: none;
   padding: 0.5rem;
   border-radius: 0.5rem;
+}
+
+.notifications {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 1rem;
+  min-width: 20rem;
+  transition: $transition;
 }
