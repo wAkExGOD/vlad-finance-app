@@ -9,9 +9,11 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { getPurchasesStatisticForTime } from '../utils';
-import { colors } from '../constants';
+import { getPurchasesStatisticForTime } from '../../utils';
+import { colors } from '../../constants';
 import { useEffect, useState } from 'react';
+
+import styles from './Overview.module.scss';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
@@ -71,11 +73,11 @@ export function Overview() {
   }, [purchases, allExpensesRange]);
 
   return (
-    <section className="app-section" id="overview">
-      <div className="statistic-block" id="all-expenses">
+    <section className={["app-section", styles.overview].join(' ')}>
+      <div className={styles.statistic_block} id="all_expenses">
         <h1>{charts.allExpenses.name}</h1>
         { charts.allExpenses.sorting.map(({name, values}) => (
-          <div className={name} key={name}>
+          <div key={name}>
             <select
               name={name}
               id={name}
@@ -86,11 +88,11 @@ export function Overview() {
             </select>
           </div>
         )) }
-        <div className="chart">
+        <div className={styles.chart}>
           <Line options={charts.allExpenses.options} data={allExpensesChartData} />
         </div>
       </div>
-      <div className="statistic-block" id="someother"></div>
+      <div className={styles.statistic_block} id="some_other"></div>
     </section>
   );
 }

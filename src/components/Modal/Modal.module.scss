@@ -32,46 +32,5 @@
     &.active {
       transform: translateY(0);
     }
-
-    input,
-    select,
-    textarea {
-      border: none;
-      color: black;
-      // outline: 1px solid $light-blue;
-      padding: 1rem;
-      line-height: 2;
-      border-radius: 0.25rem;
-      background: aliceblue;
-    }
-    label {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 1.25rem;
-      .label-name {
-        margin-bottom: 0.5rem;
-      }
-      .error-text {
-        color: red;
-        line-height: 1.5;
-        cursor: initial;
-      }
-    }
-    [type="submit"] {
-      display: block;
-      margin-left: auto;
-      background: $light-blue;
-      color: white;
-      &:focus {
-        background: $blue;
-      }
-      &:disabled {
-        color: rgba(0, 0, 0, 0.26);
-        box-shadow: none;
-        background-color: rgba(0, 0, 0, 0.12);
-        // pointer-events: none;
-        cursor: default;
-      }
-    }
   }
 }

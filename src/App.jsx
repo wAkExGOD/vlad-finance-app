@@ -1,8 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Header, Nav, Notification } from './components/';
-import { Categories, Purchases, Overview, NoPage, Settings } from './pages';
-
+import { Categories, Purchases, Overview, NoPage, Settings, LogIn, Registration } from './pages';
 
 function App() {
   return (
@@ -17,6 +16,8 @@ function App() {
             <Route path="purchases" element={<Purchases />} />
             <Route path="overview" element={<Overview />} />
             <Route path="settings" element={<Settings />} />
+            <Route path="login" element={<LogIn />} />
+            <Route path="registration" element={<Registration />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
         </main>

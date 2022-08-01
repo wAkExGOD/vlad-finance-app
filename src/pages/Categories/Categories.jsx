@@ -1,10 +1,11 @@
 import { useSelector } from 'react-redux';
-import { generateCategories } from '../utils';
+import { generateCategories } from '../../utils';
 
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
-import { colors } from '../constants';
+import styles from './Categories.module.scss';
+import { colors } from '../../constants';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -29,20 +30,20 @@ export function Categories() {
   const options = { cutout: '60%', responsive: true, maintainAspectRatio: false };
 
   return (
-    <section className="app-section" id="categories">
-      <div className="date">
+    <section className={["app-section", styles.categories].join(' ')}>
+      <div className={styles.date}>
         <select>
           <option value="last">Last month</option>
         </select>
       </div>
 
-      <div className="categories">
+      <div className={styles.categories_block}>
         <h2>Categories</h2>
         <ul>
           {Object.keys(categories).map((category, index) => (
-            <li className="category" key={index} style={{ background: colors[index] }}>
-              <div className="category-name">{category}</div>
-              <span className="category-expenses">
+            <li className={styles.category} key={index} style={{ background: colors[index] }}>
+              <div className={styles.category_name}>{category}</div>
+              <span className={styles.category_expenses}>
                 <b>{categories[category].toFixed(2)}</b> BYN
               </span>
             </li>
@@ -50,14 +51,14 @@ export function Categories() {
         </ul>
       </div>
 
-      <div className="circle-statistic">
-        <div className="info">
+      <div className={styles.circle_statistic}>
+        <div className={styles.info}>
           <h2>Expenses</h2>
           <span>
             {Object.values(categories).reduce((total, curr) => (total += curr), 0).toFixed(2)} BYN
           </span>
         </div>
-        <div className="circle-container">
+        <div className={styles.circle_container}>
           <Doughnut data={data} options={options} />
         </div>
       </div>

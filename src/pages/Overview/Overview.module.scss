@@ -1,5 +1,7 @@
-.app-section#overview {
-  .statistic-block {
+@import '../../styles/variables';
+
+.overview {
+  .statistic_block {
     padding: 1rem;
     border-radius: 0.5rem;
     background: $light-purple;

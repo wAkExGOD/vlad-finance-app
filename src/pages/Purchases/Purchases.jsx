@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { AddPurchaseForm, Button, PurchaseCard } from '../components/';
+import { AddPurchaseForm, Button, PurchaseCard } from '../../components/';
 import { useSelector, useDispatch } from 'react-redux';
-import { purchasesSlice } from '../store/reducers/PurchasesSlice';
-import { Modal } from '../components';
+import { purchasesSlice } from '../../store/reducers/PurchasesSlice';
+import { Modal } from '../../components';
+import styles from './Purchases.module.scss';
 
 const sorting = [
   { value: 'asc_price', text: 'Ascending price' },
@@ -47,15 +48,15 @@ export function Purchases() {
   }
 
   return (
-    <section className="app-section" id="purchases">
-      <div className="add-purchase">
+    <section className={["app-section", styles.purchases].join(' ')}>
+      <div className={styles.add_purchase}>
         <Button type="red" onClick={() => setModalActive(true)}>
           <div>+</div>
           <div>Add new purchase</div>
         </Button>
       </div>
-      <div className="last-purchases">
-        <div className="sort">
+      <div className={styles.last_purchases}>
+        <div className={styles.sort}>
           <label htmlFor="sort-param">
             <span>Sorted by</span>
             <select
@@ -70,15 +71,15 @@ export function Purchases() {
             </select>
           </label>
         </div>
-        <div className="container">
+        <div className={styles.container}>
           {sortPurchases(sortBy).map((data) => (
             <PurchaseCard key={data.id} data={data} />
           ))}
         </div>
-        <div className="pagination">
+        <div className={styles.pagination}>
           <span className="prev">←</span>
-          <div className="pages">
-            <span className="active">1</span>
+          <div className={styles.pages}>
+            <span className={styles.active}>1</span>
             <span>2</span>
             <span>3</span>
             <span>4</span>

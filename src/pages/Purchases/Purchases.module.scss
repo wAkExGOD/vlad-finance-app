@@ -1,5 +1,7 @@
-.app-section#purchases {
-  .add-purchase {
+@import '../../styles/variables';
+
+.purchases {
+  .add_purchase {
     display: flex;
     justify-content: center;
     padding: 1rem;
@@ -7,7 +9,7 @@
     border-radius: 0.5rem;
     margin-bottom: 2rem;
   }
-  .last-purchases {
+  .last_purchases {
     .sort {
       padding: 1rem;
       border-radius: 0.5rem;
@@ -41,6 +43,9 @@
         transition: $transition;
         margin: 0 0.25rem;
         cursor: pointer;
+        font-size: 1rem;
+        line-height: 1rem;
+        transition: $transition;
 
         &:not(.active):hover {
           background: black;
@@ -51,10 +56,6 @@
           background: $blue;
           color: white;
         }
-        
-        font-size: 1rem;
-        line-height: 1rem;
-        transition: $transition;
       }
     }
   }

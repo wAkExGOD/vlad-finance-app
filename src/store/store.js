@@ -1,18 +1,9 @@
-// import { combineReducers, configureStore } from '@reduxjs/toolkit';
-// import purchasesReducer from './reducers/PurchasesSlice';
-
-// const rootReducer = combineReducers({
-//   purchasesReducer
-// });
-
-// export const setupStore = () => {
-//   return configureStore({
-//     reducer: rootReducer,
-//   })
-// }
+// import { configureStore } from "@reduxjs/toolkit";
+// import { postsReducer } from "./slices/posts";
+// import { authReducer } from "./slices/auth";
 
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './reducers/AuthSlice';
+import { authReducer } from './reducers/AuthSlice';
 import purchasesReducer from './reducers/PurchasesSlice';
 
 // MIDDLEWARE

@@ -9,7 +9,8 @@ export function AddPurchaseForm(props) {
       id="add_purchase"
       onSubmit={handleSubmit((data) => {
         props.handleSubmit(data); reset();
-      })}>
+      })}
+      autoComplete="off">
       <label htmlFor="purchase-name">
         <span className="label-name">Product name</span>
         <input
