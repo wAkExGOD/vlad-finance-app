@@ -40,7 +40,7 @@ export function AddPurchaseForm(props) {
           {...register('category', { required: 'Select the product category' })}>
           <option value="">Select category...</option>
           {categories.map((name, index) => (
-            <option value={name} id={index}>{name}</option>
+            <option value={name} key={index}>{name}</option>
           ))}
         </select>
         {errors?.category && <p className="error-text">{errors?.category?.message || 'Error!'}</p>}

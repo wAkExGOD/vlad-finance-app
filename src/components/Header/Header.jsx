@@ -31,7 +31,7 @@ export function Header() {
             <Link to="/login">
               <Button variant="outlined" className={styles.button}>Log in</Button>
             </Link>
-            <Link to="/register">
+            <Link to="/registration">
               <Button variant="outlined" className={styles.button}>Create an account</Button>
             </Link>
           </>
