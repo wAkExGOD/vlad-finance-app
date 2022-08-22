@@ -1,56 +1,101 @@
-import { useState } from 'react';
-import { AddPurchaseForm, Button, PurchaseCard } from '../../components/';
+import { useState, useEffect } from 'react';
+import {
+  AddPurchaseForm,
+  EditPurchaseForm,
+  FirstLogIn,
+  Pagination,
+  PurchaseCard,
+} from '../../components';
+import Button from '../../UiKit/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { purchasesSlice } from '../../store/reducers/PurchasesSlice';
-import { Modal } from '../../components';
+import { fetchAddPurchase, fetchPurchases, selectPurchases } from '../../store/reducers/PurchasesSlice';
+import { selectIsAuth } from '../../store/reducers/AuthSlice';
+import { sortPurchases, getElementsByPagination } from '../../utils';
+import { sortingPurchasesOptions, screenSizes } from '../../constants';
 import styles from './Purchases.module.scss';
-
-const sorting = [
-  { value: 'asc_price', text: 'Ascending price' },
-  { value: 'desc_price', text: 'Descending price' },
-  { value: 'asc_time', text: 'Ascending time' },
-  { value: 'desc_time', text: 'Descending time' },
-];
+import MainPopup from '../../UiKit/MainPopup';
 
 export function Purchases() {
-  const [modalActive, setModalActive] = useState(false);
-  const purchases = useSelector(state => state.purchases.items);
-  const [ sortBy, setSortBy ] = useState(sorting[0].value);
-  const { addPurchase } = purchasesSlice.actions;
   const dispatch = useDispatch();
+  
+  const getElementsCount = () => {
+    const width = document.documentElement.clientWidth;
 
-  function addNewPurchase({ name, category, price }) {
-    dispatch(addPurchase({ name, category, price }));
-    setModalActive(false);
-  };
-
-  function sortPurchases(sortBy) {
-    let sortedPurchases;
-
-    switch (sortBy) {
-      case sorting[0].value:
-        sortedPurchases = [...purchases].sort((a, b) => a.price - b.price);
-        break;
-      case sorting[1].value:
-        sortedPurchases = [...purchases].sort((a, b) => b.price - a.price);
-        break;
-      case sorting[2].value:
-        sortedPurchases = [...purchases].sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
-        break;
-      case sorting[3].value:
-        sortedPurchases = [...purchases].sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
-        break;
-      default:
-        break;
+    if (width > screenSizes.large) {
+      return 9;
+    } else if (width > screenSizes.medium) {
+      return 6;
+    } else if (width > screenSizes.small) {
+      return 8;
+    } else {
+      return 4;
     }
-
-    return sortedPurchases;
   }
 
+  const [addModalActive, setAddModalActive] = useState(false);
+  const [editModalActive, setEditModalActive] = useState(false);
+  const [editPurchaseData, setEditPurchaseData] = useState({});
+
+  const [pageNumber, setPageNumber] = useState(1);
+  const [perPage, setPerPage] = useState(getElementsCount());
+
+  const [sortBy, setSortBy] = useState(Object.keys(sortingPurchasesOptions)[0]);
+  const purchases = useSelector(selectPurchases);
+  const arePurchasesLoading = purchases.status === 'loading';
+  const isAuth = useSelector(selectIsAuth);
+
+  const addNewPurchase = async ({ name, category, price }) => {
+    try {
+      const data = await dispatch(fetchAddPurchase({ name, category, price }));
+      console.log(data);
+
+      setAddModalActive(false);
+
+      dispatch(fetchPurchases());
+    } catch (error) {
+      console.warn(error);
+    }
+  };
+
+  const openEditModal = (data) => {
+    setEditPurchaseData(data);
+    setEditModalActive(true);
+  };
+
+  useEffect(() => {
+    if (isAuth && purchases.status !== 'resolved') {
+      dispatch(fetchPurchases());
+    }
+  }, [isAuth, purchases.status, dispatch]);
+
+
+
+  useEffect(() => {
+    const listener = () => {
+      setPerPage(getElementsCount());
+    }
+
+    window.addEventListener('resize', listener);
+
+    return () => {
+      window.removeEventListener('resize', listener);
+    }
+  }, [])
+
+  if (!isAuth) {
+    return <FirstLogIn />;
+  }
+
+  const purchasesArr = getElementsByPagination(
+    sortPurchases(purchases.items, sortBy),
+    perPage,
+    pageNumber,
+  );
+
   return (
-    <section className={["app-section", styles.purchases].join(' ')}>
+    <section className={['app-section', styles.purchases].join(' ')}>
       <div className={styles.add_purchase}>
-        <Button type="red" onClick={() => setModalActive(true)}>
+        <Button type="red" onClick={() => setAddModalActive(true)} disabled={arePurchasesLoading}>
           <div>+</div>
           <div>Add new purchase</div>
         </Button>
@@ -59,37 +104,53 @@ export function Purchases() {
         <div className={styles.sort}>
           <label htmlFor="sort-param">
             <span>Sorted by</span>
-            <select
-              id="sort-param"
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}>
-              {sorting.map(({ value, text }, index) => (
-                <option key={index} value={value}>
-                  {text}
+            <select id="sort-param" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+              {Object.keys(sortingPurchasesOptions).map((sortValue, index) => (
+                <option key={index} value={sortValue}>
+                  {sortingPurchasesOptions[sortValue].text}
                 </option>
               ))}
             </select>
           </label>
         </div>
         <div className={styles.container}>
-          {sortPurchases(sortBy).map((data) => (
-            <PurchaseCard key={data.id} data={data} />
-          ))}
+          {arePurchasesLoading &&
+            [...Array(6)].map((_, index) => <PurchaseCard key={index} isLoading={true} />)}
+          {!arePurchasesLoading &&
+            (purchases.items.length > 0 ? (
+              purchasesArr.map((obj, index) => (
+                <PurchaseCard
+                  onEditClick={() => openEditModal(obj)}
+                  key={obj.purchaseId}
+                  data={obj}
+                />
+              ))
+            ) : (
+              <div>You have no purchases</div>
+            ))}
         </div>
-        <div className={styles.pagination}>
-          <span className="prev">←</span>
-          <div className={styles.pages}>
-            <span className={styles.active}>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-          </div>
-          <span className="next">→</span>
-        </div>
+
+        {!arePurchasesLoading && purchases.items.length > 0 && (
+          <Pagination
+            className={[styles.pagination]}
+            count={purchases.items.length}
+            perPage={perPage}
+            pageNumber={pageNumber}
+            setPageNumber={setPageNumber}
+          />
+        )}
       </div>
-      <Modal active={modalActive} setActive={setModalActive}>
+
+      <MainPopup isOpened={addModalActive} onClose={() => setAddModalActive(false)} title="Add purchase">
         <AddPurchaseForm handleSubmit={addNewPurchase} />
-      </Modal>
+      </MainPopup>
+
+      <MainPopup isOpened={editModalActive} onClose={() => setEditModalActive(false)}>
+        <EditPurchaseForm
+          data={editPurchaseData}
+          closeModal={() => setEditModalActive(false)}
+        />
+      </MainPopup>
     </section>
   );
 }

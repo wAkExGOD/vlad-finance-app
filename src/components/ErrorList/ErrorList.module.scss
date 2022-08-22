@@ -1,0 +1,14 @@
+.error-block {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: #ffe4e4;
+}
+.error-item {
+  color: red;
+  line-height: 2;
+  cursor: initial;
+  margin-bottom: 0;
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+}

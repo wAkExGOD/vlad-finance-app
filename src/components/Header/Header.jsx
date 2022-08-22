@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, selectIsAuth } from '../../store/reducers/AuthSlice';
 
-import { Button } from '../../components';
+import Button from '../../UiKit/Button';
 
 import settingsIcon from '../../assets/icons/settings.svg';
 import styles from './Header.module.scss';

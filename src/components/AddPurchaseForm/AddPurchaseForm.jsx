@@ -1,15 +1,24 @@
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { categories } from '../../constants';
+import Button from '../../UiKit/Button';
 
 export function AddPurchaseForm(props) {
-  const { register, formState: { errors, isValid }, handleSubmit, reset } = useForm({ mode: "onChange" });
+  const {
+    register,
+    formState: { errors, isValid },
+    handleSubmit,
+    reset,
+  } = useForm({ mode: 'onChange' });
+  const { status, error } = useSelector((state) => state.purchases);
 
+  const isLoading = status === 'loading';
+  console.log(isLoading);
   return (
     <form
       id="add_purchase"
-      onSubmit={handleSubmit((data) => {
-        props.handleSubmit(data); reset();
-      })}
+      className={status === 'loading' ? 'loading' : null}
+      onSubmit={handleSubmit((data) => props.handleSubmit(data))}
       autoComplete="off">
       <label htmlFor="purchase-name">
         <span className="label-name">Product name</span>
@@ -40,7 +49,9 @@ export function AddPurchaseForm(props) {
           {...register('category', { required: 'Select the product category' })}>
           <option value="">Select category...</option>
           {categories.map((name, index) => (
-            <option value={name} key={index}>{name}</option>
+            <option value={name} key={index}>
+              {name}
+            </option>
           ))}
         </select>
         {errors?.category && <p className="error-text">{errors?.category?.message || 'Error!'}</p>}
@@ -67,7 +78,15 @@ export function AddPurchaseForm(props) {
         />
         {errors?.price && <p className="error-text">{errors?.price?.message || 'Error'}</p>}
       </label>
-      <input className="btn contained" type="submit" value="Add" disabled={!isValid} />
+
+      <Button
+        isLoading={isLoading}
+        onClick={handleSubmit((data) => props.handleSubmit(data))}
+        disabled={!isValid || isLoading}
+        tabIndex="0"
+        type="submit">
+        Add
+      </Button>
     </form>
   );
 }

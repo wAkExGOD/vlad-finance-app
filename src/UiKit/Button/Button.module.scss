@@ -1,0 +1,41 @@
+@import '../../styles/variables';
+
+.btn {
+  outline: none;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  padding: 1rem 2rem;
+  transition: $transition;
+  border: 1px solid transparent;
+  &.contained:not([disabled]) {
+    background: $blue;
+    color: white;
+    &:hover {
+      background: $light-blue;
+    }
+    &:active {
+      // transform: translateY(0.5em);
+      background: rgba(0, 0, 0, 0.1);
+    }
+  }
+  &.outlined:not([disabled]) {
+    border-color: $blue;
+    color: $blue;
+    background: transparent;
+    &:hover {
+      background: $blue;
+      color: white;
+    }
+    &:active {
+      background: $light-blue;
+    }
+  }
+  &:disabled {
+    pointer-events: none;
+    color: rgba(0, 0, 0, 0.26);
+    box-shadow: none;
+    background-color: rgba(0, 0, 0, 0.12);
+    cursor: default;
+  }
+}

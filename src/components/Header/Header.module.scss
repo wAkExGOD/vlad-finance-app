@@ -16,6 +16,11 @@
       padding: 0.25rem 0.5rem;
       margin: 0 0.25rem;
       border: 1px solid white;
+      background: white;
+      &:hover {
+        color: white;
+        background: transparent;
+      }
     }
   }
 }

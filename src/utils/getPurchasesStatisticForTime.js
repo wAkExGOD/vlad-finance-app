@@ -1,7 +1,8 @@
 // const purchases = [
-//   { id: 2,    name: 'Bread',         category: 'Food',           price: '2',     time: '2022-07-26T11:37:05.071Z' },
-//   { id: 3,    name: 'Another Bread', category: 'Food',           price: '1',     time: '2022-07-26T20:40:41.142Z' },
-//   { id: 4,    name: 'sss',           category: 'Entertainment',  price: '2',     time: '2022-07-27T21:30:05.978Z' },
+//   { id: 2,    name: 'Bread',         category: 'Food',           price: '2',     time: 1659706999 },
+//   { id: 3,    name: 'Another Bread', category: 'Food',           price: '1',     time: 1659760999 },
+//   { id: 4,    name: 'sss',           category: 'Entertainment',  price: '2',     time: 1659786999 },
+//   { id: 5,    name: 'motor',           category: 'Vehicle',  price: '2',     time: 1659796999 },
 // ];
 
 const timeOptions = {
@@ -20,7 +21,6 @@ export const getPurchasesStatisticForTime = (purchases, lastTime) => {
   }
   const obj = {datasets: {}, labels: categoriesArr, data: {}};
   const date = Math.floor(new Date().getTime() / 1000);
-  // const now = date + (every - (date % every));
   const now = date - (date % every);
 
   const everyMiliseconds = every * 1000;
@@ -35,7 +35,7 @@ export const getPurchasesStatisticForTime = (purchases, lastTime) => {
     const maxTime = minTime + every;
 
     purchases.forEach((purchase) => {
-      const purchaseTime = Math.floor(new Date(purchase.time).getTime() / 1000);
+      const purchaseTime = purchase.time;
 
       if (purchaseTime > minTime && purchaseTime < maxTime) {
         obj.datasets[time].money[purchase.category] += parseFloat(purchase.price);
@@ -55,8 +55,7 @@ export const getPurchasesStatisticForTime = (purchases, lastTime) => {
     }
   }
 
-  // console.log(obj);
   return obj;
 };
 
-// console.log(JSON.stringify(getPurchasesStatisticForTime(purchases, 'week')));
+// console.log(JSON.stringify(getPurchasesStatisticForTime(purchases, 'year')));

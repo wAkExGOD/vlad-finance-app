@@ -1,6 +1,11 @@
 @import '../../styles/variables';
 
 .purchases {
+  display: flex;
+  flex-direction: column;
+  @media (max-height: 740px) {
+    overflow-y: auto;
+  }
   .add_purchase {
     display: flex;
     justify-content: center;
@@ -8,8 +13,14 @@
     background: $light-purple;
     border-radius: 0.5rem;
     margin-bottom: 2rem;
+    @media (max-width: $screen-small) {
+      margin-bottom: 1rem;
+    }
   }
   .last_purchases {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
     .sort {
       padding: 1rem;
       border-radius: 0.5rem;
@@ -21,42 +32,26 @@
     }
     .container {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      height: 100%;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
       grid-gap: 1rem;
       margin-bottom: 1rem;
+      @media (max-width: $screen-large) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+      }
+      @media (max-width: $screen-medium) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+      }
+      @media (max-width: $screen-small) {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+      }
     }
     .pagination {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .pages {
-        display: flex;
-      }
-      span {
-        display: inline-block;
-        padding: 0.5rem;
-        border: 1px solid $light-purple;
-        border-radius: 0.25rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: $transition;
-        margin: 0 0.25rem;
-        cursor: pointer;
-        font-size: 1rem;
-        line-height: 1rem;
-        transition: $transition;
-
-        &:not(.active):hover {
-          background: black;
-          color: white
-        }
-
-        &.active {
-          background: $blue;
-          color: white;
-        }
-      }
+      margin-top: auto;
     }
   }
 }

@@ -4,4 +4,6 @@ export { Overview } from "./Overview";
 export { Settings } from "./Settings/";
 export { LogIn } from "./LogIn";
 export { Registration } from "./Registration";
+export { NewPassword } from "./NewPassword";
+export { ForgotPassword } from "./ForgotPassword";
 export { NoPage } from "./NoPage";

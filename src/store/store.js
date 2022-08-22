@@ -7,19 +7,19 @@ import { authReducer } from './reducers/AuthSlice';
 import purchasesReducer from './reducers/PurchasesSlice';
 
 // MIDDLEWARE
-const localStorageMiddleware = ({ getState }) => {
-  return (next) => (action) => {
-    const result = next(action);
-    localStorage.setItem('appState', JSON.stringify(getState()));
-    return result;
-  };
-};
+// const localStorageMiddleware = ({ getState }) => {
+//   return (next) => (action) => {
+//     const result = next(action);
+//     localStorage.setItem('appState', JSON.stringify(getState()));
+//     return result;
+//   };
+// };
 
-const reHydrateStore = () => {
-  if (localStorage.getItem('appState') !== null) {
-    return JSON.parse(localStorage.getItem('appState'));
-  }
-};
+// const reHydrateStore = () => {
+//   if (localStorage.getItem('appState') !== null) {
+//     return JSON.parse(localStorage.getItem('appState'));
+//   }
+// };
 
 // STORE CONFIGURATION
 const store = configureStore({
@@ -27,8 +27,8 @@ const store = configureStore({
     auth: authReducer,
     purchases: purchasesReducer,
   },
-  preloadedState: reHydrateStore(),
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(localStorageMiddleware),
+  // preloadedState: reHydrateStore(),
+  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(localStorageMiddleware),
 });
 
 export default store;

@@ -1,20 +1,33 @@
 @import '../../styles/variables';
 
 .overview {
+  overflow-y: auto;
   .statistic_block {
-    padding: 1rem;
-    border-radius: 0.5rem;
+    padding: 1em;
+    border-radius: 0.5em;
     background: $light-purple;
     &:not(:last-child) {
-      margin-bottom: 1rem;
+      margin-bottom: 1em;
     }
     h1 {
       text-align: center;
+    }
+    .chart-container {
+      @media (max-width: $screen-small) {
+        overflow: auto;
+      }
     }
     .chart {
       width: calc(100% - 4px);
       max-width: 60vw;
       margin: 0 auto;
+      @media (max-width: $screen-medium) {
+        max-width: 100vw;
+      }
+      @media (max-width: $screen-small) {
+        width: 250vw;
+        max-width: none;
+      }
     }
   }
 }

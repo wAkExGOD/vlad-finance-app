@@ -1,0 +1,30 @@
+.container {
+  width: 100%;
+  position: relative;
+  padding: 0 2rem;
+  text-align: center;
+  // .title {
+
+  // }
+  .btn {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    outline: none;
+    background: rgba(0,0,0,0.05);
+    border-radius: 0.25rem;
+    &.prev {
+      left: 0;
+    }
+    &.close {
+      right: 0;
+    }
+  }
+
+  .title {
+    margin-bottom: 1rem;
+  }
+}

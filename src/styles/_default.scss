@@ -25,24 +25,37 @@ a {
   text-decoration: none;
   transition: $transition;
 }
+.dashed {
+  color: $blue;
+  border-bottom: 1px dashed $light-blue;
+}
 
 img {
   width: 1.5rem;
   height: 1.5rem;
 }
 
-#root {
-  height: 100vh;
-}
+// #app-root {
+//   height: 100vh;
+// }
 
 .App {
   display: grid;
-  height: 100%;
+  height: 100vh;
+  max-height: 100vh;
   grid-template-areas:
     'header header'
     'nav main';
-  grid-template-columns: $nav-width auto;
-  grid-template-rows: $header-height auto;
+  grid-template-columns: $nav-width calc(100% - $nav-width);
+  grid-template-rows: $header-height calc(100% - $header-height);
+  @media (max-width: $screen-medium) {
+    grid-template-areas:
+      'header'
+      'main'
+      'nav';
+    grid-template-columns: 100%;
+    grid-template-rows: $header-height calc(100% - $header-height - $header-height);
+  }
 }
 .header {
   grid-area: header;
@@ -64,8 +77,9 @@ img {
 
 input:focus,
 textarea:focus,
-select:focus {
-  outline: 1px solid $light-blue;
+select:focus,
+button:focus {
+  outline: 2px solid $cyan;
 }
 label:hover {
   cursor: pointer;
@@ -76,7 +90,7 @@ select {
   border-radius: 0.5rem;
 }
 
-.notifications {
+#notifications-root {
   position: fixed;
   left: 0;
   bottom: 0;
@@ -84,5 +98,5 @@ select {
   flex-direction: column-reverse;
   padding: 1rem;
   min-width: 20rem;
-  transition: $transition;
+  opacity: 0;
 }

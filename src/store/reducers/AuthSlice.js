@@ -1,46 +1,59 @@
-// import { createSlice } from '@reduxjs/toolkit';
-
-// const initialAuthState = {
-//   isAuthenticated: false,
-// };
-
-// const authSlice = createSlice({
-//   name: 'auth',
-//   initialState: initialAuthState,
-//   reducers: {
-//     login(state) {
-//       state.isAuthenticated = true;
-//     },
-//     logout(state) {
-//       state.isAuthenticated = false;
-//     },
-//   },
-// });
-
-// export default authSlice.reducer;
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../axios';
 
-export const fetchAuth = createAsyncThunk('auth/fetchAuth', async (params) => {
-  const { data } = await axios.post('/auth/login', params);
-  return data;
-});
+export const fetchAuth = createAsyncThunk(
+  'auth/fetchAuth',
+  async (params, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post('/auth/login', params);
+      return data;
+    } catch(error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
-export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async () => {
-  const { data } = await axios.get('/auth/me');
-  return data;
-});
+export const fetchAuthMe = createAsyncThunk(
+  'auth/fetchAuthMe', 
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get('/auth/me');
+      return data;
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
-export const fetchRegister = createAsyncThunk('auth/fetchRegister', async (params) => {
-  const { data } = await axios.post('/auth/register', params);
-  return data;
-});
+export const fetchRegister = createAsyncThunk(
+  'auth/fetchRegister',
+  async (params, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post('/auth/register', params);
+      return data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const initialState = {
-  data: null,
   status: 'loading',
+  data: null,
+  error: {
+    login: null,
+    registration: null,
+    authMe: null,
+  },
 };
+
+// const setError = (state, action) => {
+//   state.status = 'rejected';
+//   state.error = action.payload;
+// }
 
 const authSlice = createSlice({
   name: 'auth',
@@ -48,6 +61,7 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.data = null;
+      state.error = null;
     }
   },
   extraReducers: {
@@ -55,46 +69,55 @@ const authSlice = createSlice({
     [fetchAuth.pending]: (state) => {
       state.status = 'loading';
       state.data = null;
+      state.error.login = null;
     },
     [fetchAuth.fulfilled]: (state, action) => {
-      state.status = 'loaded';
+      state.status = 'resolved';
       state.data = action.payload;
     },
-    [fetchAuth.rejected]: (state) => {
-      state.status = 'error';
-      state.data = null;
+    [fetchAuth.rejected]: (state, action) => {
+      state.status = 'rejected';
+      state.error.login = action.payload;
     },
+
+
     // fetchAuthMe:
     [fetchAuthMe.pending]: (state) => {
       state.status = 'loading';
-      state.data = null;
+      state.error.authMe = null;
     },
     [fetchAuthMe.fulfilled]: (state, action) => {
-      state.status = 'loaded';
+      state.status = 'resolved';
       state.data = action.payload;
     },
-    [fetchAuthMe.rejected]: (state) => {
-      state.status = 'error';
+    [fetchAuthMe.rejected]: (state, action) => {
+      state.status = 'rejected';
       state.data = null;
+      state.error.authMe = action.payload;
+
+      localStorage.removeItem('token');
     },
+
+
     // fetchRegister:
     [fetchRegister.pending]: (state) => {
       state.status = 'loading';
       state.data = null;
+      state.error.registration = null;
     },
     [fetchRegister.fulfilled]: (state, action) => {
-      state.status = 'loaded';
+      state.status = 'resolved';
       state.data = action.payload;
     },
-    [fetchRegister.rejected]: (state) => {
-      state.status = 'error';
-      state.data = null;
+    [fetchRegister.rejected]: (state, action) => {
+      state.status = 'rejected';
+      state.error.registration = action.payload;
     },
   },
 });
 
-export const selectIsAuth = (state) => Boolean(state.auth.data);
-
 export const authReducer = authSlice.reducer;
+
+export const selectIsAuth = (state) => Boolean(state.auth.data);
 
 export const { logout } = authSlice.actions;
